@@ -1,25 +1,17 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import './Cockpit.css'
-import styled from 'styled-components'
-
-const StyledButton = styled.button`
-  background-color: ${props => props.alt ? 'red' : 'green'};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
-    color: black;
-  }
-`;
-
-
+import {StyledButton} from './Cockpit.styles'
 
 const cockpit = (props) => {
-    
+  
+  const toggleBtnRef=useRef(null)
+useEffect(() => {
+   
+toggleBtnRef.current.click()
+
+}, [])
+
+
     const classes = [];
      if (props.persons.length <= 2) {
       classes.push('red'); // classes = ['red']
@@ -28,15 +20,14 @@ const cockpit = (props) => {
       classes.push('bold'); // classes = ['red', 'bold']
     }
 
-
     return (
     <div>
         <h1>{props.appTitle}</h1>
         <p className={classes.join(' ')}>This is really working!</p>
-        <StyledButton alt={props.showPersons} onClick={props.clicked}>
+        <StyledButton ref={toggleBtnRef} alt={props.showPersons} onClick={props.clicked}>
           Toggle Persons
         </StyledButton>
-       
+        <StyledButton onClick={props.login}>Log In </StyledButton>
     </div>
     )
 }

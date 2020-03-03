@@ -11,7 +11,9 @@ class App extends Component {
       { id: 'asdf11', name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true,
+    isLogin:false
   };
 
   nameChangedHandler = (event, id) => {
@@ -44,7 +46,10 @@ class App extends Component {
     const doesShow = this.state.showPersons;
     this.setState({ showPersons: !doesShow });
   };
-
+handleLogin=()=> {
+  this.setState({isLogin:true})
+}
+  
   render() {
     let persons = null;
 
@@ -55,6 +60,7 @@ class App extends Component {
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
             changed={this.nameChangedHandler}
+            auth={this.state.isLogin}
             />
         </div>
       );
@@ -67,15 +73,25 @@ class App extends Component {
     }
 
     return (
+
       <div className="App">
+        <button 
+        onClick={() => {
+          this.setState({showCockpit:false})
+        }}> Show Cockpit </button>
+
+        { this.state.showCockpit ? (
         <Cockpit 
         appTitle={this.props.appTitle}
         showPersons={this.state.showPersons}
         persons={this.state.persons}
         clicked={this.togglePersonsHandler}
-        />
+        login={this.handleLogin}
+        />) : null}
+
         {persons}
       </div>
+
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
